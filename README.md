@@ -18,6 +18,7 @@ mkdir mqtt
 cd mqtt
 nano mqtt_publisher.py
 `
+
 Create the Script
 
 Paste in the code from the repository (edit in the correct address for your broker)
