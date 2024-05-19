@@ -21,3 +21,4 @@ check out mqtt.log in the mqtt folder to see if any errors or posted or if it is
 
 More later on automating the startup of this when I manage to do it without breaking the home pro and requiring a hard reset.
 
+Will format this page properly when I remeber the tags.
