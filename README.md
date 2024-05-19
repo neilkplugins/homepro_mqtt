@@ -3,11 +3,11 @@ MQTT script for the Home Pro provided on an entirely "as is" basis, use entirely
 
 Basic Instructions
 
-###SSH into your home pro
+### SSH into your home pro
 
 `ssh -p 8023 -o HostKeyAlgorithms=+ssh-rsa root@<home_pro_ip>`
 
-###Install paho
+### Install paho
 
 `pip3 install paho-mqtt`
 
