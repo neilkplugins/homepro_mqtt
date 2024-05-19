@@ -5,6 +5,10 @@ Basic Instructions
 
 SSH into your home pro
 
+Install paho
+
+pip3 install paho-mqtt
+
 Create the mqtt directory
 
 mkdir mqtt
