@@ -13,11 +13,11 @@ Basic Instructions
 
 ### Create the mqtt directory
 
-`
+```
 mkdir mqtt
 cd mqtt
 nano mqtt_publisher.py
-`
+```
 
 Create the Script
 
