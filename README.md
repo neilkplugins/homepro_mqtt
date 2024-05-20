@@ -70,7 +70,7 @@ env | grep _ >> /etc/environment
 
 This is very experimental and has little error checking or automatic recovery if it dies for whatever reason it will need to be restarted manually or a power cycle.
 
-I will look if it seems necessary to build a watchdog capability to restart if the process is not detected, but will test for now.
+I will look to making this run as a daemon (learning that now) but need to make sure I have trapped all likely python exceptions, it looks like the API calls fail after while, and this is not yet trapped.  Once I am happy it runs consistently and also survives and recoeovers from errors.
 
 At present the script still publishes updates even the home pro is in the dreaded flashing CAD state, I may enhance this to check and skip publishing in that circumstance, and alternate thought will be this will show the duration of any meter dropouts so both approaches may be beneficial depending on what you do with the data afterwards.
 
