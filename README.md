@@ -74,4 +74,17 @@ I will look to making this run as a daemon (learning that now) but need to make 
 
 At present the script still publishes updates even the home pro is in the dreaded flashing CAD state, I may enhance this to check and skip publishing in that circumstance, and alternate thought will be this will show the duration of any meter dropouts so both approaches may be beneficial depending on what you do with the data afterwards.
 
+## Version using external config file and with authentication support
+
+I have also created a version that looks for a configuration file in the same directory of the script `mqtt_publisher_config` called `mqtt.cfg`
+
+This version will read the broker IP and port from this file, a sample is in the repository.  If you are not using a password then you can delete the authentication section.
+
+### Authentication support
+
+If you add an `[authentication]` section and add entries to the `mqtt.cfg` file, it will use the password and username for the broker connection.
+
+A sample `mqtt.cfg` file is in the repository.
+
+I have had limited testing of this, as I don't have a broker requiring authentication to test against.
 
