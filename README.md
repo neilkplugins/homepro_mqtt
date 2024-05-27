@@ -76,7 +76,7 @@ At present the script still publishes updates even the home pro is in the dreade
 
 ## Version using external config file and with authentication support
 
-I have also created a version that looks for a configuration file in the same directory of the script `mqtt_publisher_config` called `mqtt.cfg`
+I have also created a version of the script that looks for a configuration file in the same directory of the script `mqtt_publisher_config` called `mqtt.cfg`
 
 This version will read the broker IP and port from this file, a sample is in the repository.  If you are not using a password then you can delete the authentication section.
 
@@ -86,5 +86,5 @@ If you add an `[authentication]` section and add entries to the `mqtt.cfg` file,
 
 A sample `mqtt.cfg` file is in the repository.
 
-I have had limited testing of this, as I don't have a broker requiring authentication to test against.
+I have had limited testing of this, as I don't have a broker requiring authentication to test against.  If this tests sucessfully I will combine, but the simple version may be easier to read.
 
