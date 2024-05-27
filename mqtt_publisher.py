@@ -40,7 +40,7 @@ logger.info("Connecting to Broker "+broker)
 # Run the main loop
 client.loop_start()
 try:
-	client.connect(broker, 1883, 60)
+	client.connect(broker, port, 60)
 except:
 	logger.info("Connection to "+broker+" failed")
 while not client.connected_flag: #wait in loop
