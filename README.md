@@ -84,7 +84,8 @@ This version will read the broker IP and port from this file, a sample is in the
 
 If you add an `[authentication]` section and add entries to the `mqtt.cfg` file, it will use the password and username for the broker connection.
 
-A sample `mqtt.cfg` file is in the repository and should be stored in `/root/mqtt/mqtt.cfg`.
+A sample `mqtt.cfg` file is in the repository and should be stored in `/root/mqtt/mqtt.cfg`
+
 
 I have had limited testing of this, as I don't have a broker requiring authentication to test against.  If this tests sucessfully I will combine, but the simple version may be easier to read.
 
