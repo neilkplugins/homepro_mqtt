@@ -18,8 +18,8 @@ han_host = os.getenv('HAN_API_HOST')
 config = configparser.ConfigParser()
 config.read("mqtt.cfg")
 
-if config.read("mqtt.cfg"):
-	logger.info("Reading from config file "+str(config.read("mqtt.cfg")))
+if config.read("/root/mqtt/mqtt.cfg"):
+	logger.info("Reading from config file "+str(config.read("/root/mqtt/mqtt.cfg")))
 	broker=config.get("broker","ip")
 	port=config.get("broker","port")
 	logger.info("Using "+broker+" as the broker")
