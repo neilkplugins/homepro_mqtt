@@ -42,25 +42,6 @@ Edit the startup.sh and add the following line
 
 Just after the grep statement
 
-## Old Method Create a shell script in the root directory to act as a wrapper in startup.sh
-
-This shouldn't be needed anymore, but kept the details in case anyone was using it.
-
-`nano start_mqtt.sh`
-
-Insert the following
-```
-#!/bin/bash
-/usr/bin/python3 /root/mqtt/mqtt_publisher.py &
-```
-make the script executable
-
-`chmod +x start_mqtt.sh`
-
-test it by running it
-
-`./start_mqtt.sh`
-
 check if your broker is recieving messages in your favourite tool (I use MQTT explorer), and look for any errors in mqtt.log
 
 ### If all is good, edit your startup.sh so it looks like this
@@ -95,6 +76,26 @@ This version will read the broker IP and port from this file, a sample is in the
 If you add an `[authentication]` section and add entries to the `mqtt.cfg` file, it will use the password and username for the broker connection.
 
 A sample `mqtt.cfg` file is in the repository and should be stored in `/root/mqtt/mqtt.cfg`
+
+## Old Startup approach - Method Create a shell script in the root directory to act as a wrapper in startup.sh
+
+This shouldn't be needed anymore, but kept the details in case anyone was using it.
+
+`nano start_mqtt.sh`
+
+Insert the following
+```
+#!/bin/bash
+/usr/bin/python3 /root/mqtt/mqtt_publisher.py &
+```
+make the script executable
+
+`chmod +x start_mqtt.sh`
+
+test it by running it
+
+`./start_mqtt.sh`
+
 
 
 I have had limited testing of this, as I don't have a broker requiring authentication to test against.  If this tests sucessfully I will combine, but the simple version may be easier to read.
