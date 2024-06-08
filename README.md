@@ -44,6 +44,8 @@ Just after the grep statement
 
 ## Old Method Create a shell script in the root directory to act as a wrapper in startup.sh
 
+This shouldn't be needed anymore, but kept the details in case anyone was using it.
+
 `nano start_mqtt.sh`
 
 Insert the following
