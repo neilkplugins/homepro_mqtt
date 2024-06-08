@@ -83,7 +83,7 @@ I haven't tested it for too long but this version seems much more resilient with
 
 This will once tested more thoroughly becomes the main version
 
-`mqtt_publisher_error_checking.py`
+`mqtt_publisher_error_check.py`
 
 ## Old Startup approach - Method Create a shell script in the root directory to act as a wrapper in startup.sh
 
