@@ -77,6 +77,14 @@ If you add an `[authentication]` section and add entries to the `mqtt.cfg` file,
 
 A sample `mqtt.cfg` file is in the repository and should be stored in `/root/mqtt/mqtt.cfg`
 
+### Version with Authentication Support and more robust error checking so API failures do not throw exceptions and kill the script
+
+I haven't tested it for too long but this version seems much more resilient with all api calls and processing wrapped in a `try / except` block
+
+This will once tested more thoroughly becomes the main version
+
+`mqtt_publisher_error_checking.py`
+
 ## Old Startup approach - Method Create a shell script in the root directory to act as a wrapper in startup.sh
 
 This shouldn't be needed anymore, but kept the details in case anyone was using it.
