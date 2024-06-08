@@ -34,7 +34,15 @@ check out `mqtt.log` in the mqtt folder to see if any errors or posted or if it 
 ### Make it Start automagically (but with the risk you may need a full reset and wipe your container if something goes wrong !!)
 ### Proceed only if you accept the risk of becoming even more familiar with the hard reset process !!
 
-Create a shell script in the root directory to act as a wrapper in startup.sh
+## New method using nohup
+
+Edit the startup.sh and add the following line
+
+`nohup python3 /root/mqtt/mqtt_publisher.py >/dev/null 2>&1 &`
+
+Just after the grep statement
+
+## Old Method Create a shell script in the root directory to act as a wrapper in startup.sh
 
 `nano start_mqtt.sh`
 
