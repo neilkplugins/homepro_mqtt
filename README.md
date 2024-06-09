@@ -38,7 +38,7 @@ Update this with your broker address and port, and if you do not require a passw
 If you add an `[authentication]` section and add entries to the `mqtt.cfg` file, it will use the password and username for the broker connection.
 
 
-Test it by running 
+### If you are done Test it by running 
 
 `python3 mqtt_publisher.py`
 
@@ -63,11 +63,10 @@ check if your broker is recieving messages in your favourite tool (I use MQTT ex
 
 At present the script still publishes updates even the home pro is in the dreaded flashing CAD state, I may enhance this to check and skip publishing in that circumstance, and alternate thought will be this will show the duration of any meter dropouts so both approaches may be beneficial depending on what you do with the data afterwards.
 
-### Latest Version with Authentication Support and more robust error checking so API failures do not throw exceptions and kill the script
+### This Latest Version with Authentication Support has more robust error checking so API failures do not throw exceptions and kill the script
 
 I haven't tested it for too long but this version seems much more resilient with all api calls and processing wrapped in a `try / except` block
 
-`mqtt_publisher_error_check.py`
 
 ## Old Startup approach - Method Create a shell script in the root directory to act as a wrapper in startup.sh
 
