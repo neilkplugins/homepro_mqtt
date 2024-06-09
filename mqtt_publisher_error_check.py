@@ -47,7 +47,7 @@ def on_connect(client, userdata, flags, rc):
 		logger.info("Connected to MQTT Broker  Returned code="+str(rc))
 		client.connected_flag = True
 	else:
-		logger.info("Bad connection to MQTT BrokerReturned code="+str(rc))
+		logger.error("Bad connection to MQTT BrokerReturned code="+str(rc))
 def on_disconnect(client, userdata, rc):
 	logger.info("Disconnected from MQTT broker  "+str(rc))
 	client.connected_flag = False
@@ -70,7 +70,7 @@ try:
 except:
 	logger.info("Connection to "+broker+" failed")
 while not client.connected_flag: #wait in loop
-	logger.info("Waiting for Broker connection")
+	logger.warning("Waiting for Broker connection")
 	time.sleep(1)
 logger.info("Started Main Loop")
 while True:
@@ -92,9 +92,9 @@ while True:
 			logger.info("Electricity Consumption returned")
 			#print("Meter consumption for {} meter: {}".format("elec", elec_meter_consumption))
 		else:
-			logger.info("Error calling elec get_meter_consumption API: {}".format(consump_response.json()["Status"]))
+			logger.error("Error calling elec get_meter_consumption API: {}".format(consump_response.json()["Status"]))
 	except:
-		logger.info("Error in elec  get_meter_consumption API try block")
+		logger.error("Error in elec  get_meter_consumption API try block")
 	# Get elec meter status
 	try:
 		status_response = requests.post(han_host + "/get_meter_status", json={"meter_type": "elec"})
@@ -103,9 +103,9 @@ while True:
 			logger.info("Electricity Meter Status returned")
 			#print("Meter status for {} meter: {}".format("elec", elec_meter_status))
 		else:
-			logger.info("Error calling get_meter_status API: {}".format(elec_meter_status_response.json()["Status"]))
+			logger.error("Error calling get_meter_status API: {}".format(elec_meter_status_response.json()["Status"]))
 	except:
-			logger.info("Error in elec  get_meter_consumption API try block")
+			logger.error("Error in elec  get_meter_consumption API try block")
 	# Get gas  meter consumption
 	try:
 		gas_consump_response = requests.post(han_host + "/get_meter_consumption", json={"meter_type": "gas"})
@@ -114,9 +114,9 @@ while True:
 			logger.info("Gas Consumption returned")
 			#print("Meter consumption for {} meter: {}".format("gas", gas_meter_consumption))
 		else:
-			logger.info("Error calling get_meter_consumption API: {}".format(gas_consump_response.json()["Status"]))
+			logger.error("Error calling get_meter_consumption API: {}".format(gas_consump_response.json()["Status"]))
 	except:
-			logger.info("Error in Gas  get_meter_consumption API try block")
+			logger.error("Error in Gas  get_meter_consumption API try block")
 	# Get gas meter status
 	try:
 		gas_status_response = requests.post(han_host + "/get_meter_status", json={"meter_type": "gas"})
@@ -125,9 +125,9 @@ while True:
 			logger.info("Gas Meter Status returned")
 			#print("Meter status for {} meter: {}".format("gas", gas_meter_status))
 		else:
-			logger.info("Error calling get_meter_status API: {}".format(gas_meter_status_response.json()["Status"]))
+			logger.error("Error calling get_meter_status API: {}".format(gas_meter_status_response.json()["Status"]))
 	except:
-			logger.info("Error in gas  get_meter_status API try block")
+			logger.error("Error in gas  get_meter_status API try block")
 	#Publish to  MQTT Broker
 	try:
 		ret= client.publish("homepro/elec_meter",elec_meter_consumption)
@@ -135,5 +135,5 @@ while True:
 		ret3 = client.publish("homepro/gas_meter", gas_meter_consumption)
 		ret4 = client.publish("homepro/gas_meter_status", gas_meter_status)
 	except:
-		logger.info("Error in publishing MQTT data")
+		logger.error("Error in publishing MQTT data")
 	time.sleep(5)
