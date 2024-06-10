@@ -67,6 +67,9 @@ At present the script still publishes updates even the home pro is in the dreade
 
 I haven't tested it for too long but this version seems much more resilient with all api calls and processing wrapped in a `try / except` block
 
+## "Warning about the V1 Call back deprecation"
+
+You will get a warning message from the script that the V1 callback API will be deprecated.  This will work fine, however I have a test version that uses the V2 API that avoids the warning, it is the file `mqtt_publisher_warning.py` which I am testing more before merging into the main release.  Feel free to try it.
 
 ## Old Startup approach - Method Create a shell script in the root directory to act as a wrapper in startup.sh
 
