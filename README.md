@@ -65,7 +65,7 @@ Use your preferred tool to check if the topics are posted to your broker
 check out `mqtt.log` in the mqtt folder to see if any errors or posted or if it is publishing messages succesfully.
 
 ### Make it Start automagically (but with the risk you may need a full reset and wipe your container if something goes wrong !!)
-### Proceed only if you accept the risk of becoming even more familiar with the hard reset process !!
+
 
 Edit the startup.sh and add the following line
 
