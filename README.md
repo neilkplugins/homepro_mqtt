@@ -31,6 +31,8 @@ A sample `mqtt.cfg` file is in the repository and should be stored in `/root/mqt
 
 This version will read the broker IP and port from this file, a sample is in the repository.  If you are not using a password then you can delete the authentication section.
 
+You can also configure if you wish to publish Gas and Electricty meter messages.
+
 Update this with your broker address and port, and if you do not require a password for your broker remove/do not copy the `[authentication]` section
 
 ### Authentication support
