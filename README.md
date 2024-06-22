@@ -83,7 +83,7 @@ At present the script still publishes updates even the home pro is in the dreade
 
 ### This Latest Version with Authentication Support has more robust error checking so API failures do not throw exceptions and kill the script
 
-I haven't tested it for too long but this version seems much more resilient with all api calls and processing wrapped in a `try / except` block
+This version seems much more resilient with all api calls and processing wrapped in a `try / except` block
 
 ## "Warning about the V1 Call back deprecation"
 
