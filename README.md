@@ -25,13 +25,29 @@ Paste in the code from the repository
 
 ### Create the config file
 
+```
+[broker]
+ip=192.168.1.41
+port=1883
+[authentication]
+username=temp
+password=temp
+[meters]
+electricity=True
+gas=True
+[logging]
+level=INFO
+```
+
 This latest version looks for a  configuration file in the same directory of the script `mqtt_publisher_config` called `mqtt.cfg`
 
-A sample `mqtt.cfg` file is in the repository and should be stored in `/root/mqtt/mqtt.cfg`
+A sample `mqtt.cfg` file is in the repository (and above) and should be stored in `/root/mqtt/mqtt.cfg`
 
 This version will read the broker IP and port from this file, a sample is in the repository.  If you are not using a password then you can delete the authentication section.
 
-You can also configure if you wish to publish Gas and Electricty meter messages.
+You can also configure if you wish to publish Gas and Electricty meter messages by setting the appropriate entry to `True` or `False`
+
+Logging now defaults to `ERROR` level, add the logging entry and set to `INFO` for more verbose logging.  You can change this to `ERROR` once everything is running fine and to avoid large log files.
 
 Update this with your broker address and port, and if you do not require a password for your broker remove/do not copy the `[authentication]` section
 
@@ -57,7 +73,7 @@ Edit the startup.sh and add the following line
 
 Just after the grep statement
 
-check if your broker is recieving messages in your favourite tool (I use MQTT explorer), and look for any errors in mqtt.log
+check if your broker is recieving messages in your favourite tool (I use MQTT explorer), and look for any errors in mqtt.log (you may need to set the logging level to `INFO` in the mqtt.cfg file if you are not seeing messages published.
 
 
 * Finally power cycle your home pro (entirely at your own risk, the only recovery at present if this fails is a hard reset, and your container will be wiped back to default)*
@@ -71,40 +87,7 @@ I haven't tested it for too long but this version seems much more resilient with
 
 ## "Warning about the V1 Call back deprecation"
 
-You will get a warning message from the script that the V1 callback API will be deprecated.  This will work fine, however I have a test version that uses the V2 API that avoids the warning, it is the file `mqtt_publisher_nowarning.py` which I am testing more before merging into the main release.  Feel free to try it.
+You may get a warning message from the script that the V1 callback API will be deprecated with earlier versions, this is now adressed
 
-## Old Startup approach - Method Create a shell script in the root directory to act as a wrapper in startup.sh
-
-This shouldn't be needed anymore, but kept the details in case anyone was using it.
-
-`nano start_mqtt.sh`
-
-Insert the following
-```
-#!/bin/bash
-/usr/bin/python3 /root/mqtt/mqtt_publisher.py &
-```
-make the script executable
-
-`chmod +x start_mqtt.sh`
-
-test it by running it
-
-`./start_mqtt.sh`
-
-### If all is good, edit your startup.sh so it looks like this
-
-```
-#!/bin/bash
-
-# Ensure our main env shows up in ssh sessions
-# we're passing on API host info
-env | grep _ >> /etc/environment
-# Start mqtt_publisher
-/root/start_mqtt.sh
-# Start the ssh server
-/usr/sbin/sshd -D
-```
-
-
+Thanks also to MuddyRock for the contribution (and suggestion on the logging)
 
