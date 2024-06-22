@@ -33,8 +33,8 @@ if config.read("/root/mqtt/mqtt.cfg"):
 	meters = config.has_section("meters")
 	if meters:
 		logger.info("Using meters as defined in mqtt.cfg")
-		electricity_meter=config.get("meters","electricty")
-		gas_meter=config.get("meters","gas")
+		electricity_meter=config.get("meters","electricity")=="True"
+		gas_meter=config.get("meters","gas")=="True"
 else:
 	logger.error("Config file mqtt.cfg not found, using defaults")
 	print("deffo")	
@@ -93,58 +93,58 @@ while True:
 	logger.info("Update cycle started "+current_timestamp)
 	# Get elec meter consumption
 	if electricity_meter:
-	    try:
-		consump_response = requests.post(han_host + "/get_meter_consumption", json={"meter_type": "elec"})
-		if consump_response.ok:
-			elec_meter_consumption = consump_response.json()["meter_consump"]
-			logger.info("Electricity Consumption returned")
-			#print("Meter consumption for {} meter: {}".format("elec", elec_meter_consumption))
-		else:
-			logger.error("Error calling elec get_meter_consumption API: {}".format(consump_response.json()["Status"]))
-	    except:
-		logger.error("Error in elec  get_meter_consumption API try block")
-	# Get elec meter status
-	    try:
-		status_response = requests.post(han_host + "/get_meter_status", json={"meter_type": "elec"})
-		if status_response.ok:
-			elec_meter_status = status_response.json()["meter_status"]
-			logger.info("Electricity Meter Status returned")
-			#print("Meter status for {} meter: {}".format("elec", elec_meter_status))
-		else:
-			logger.error("Error calling get_meter_status API: {}".format(elec_meter_status_response.json()["Status"]))
-	    except:
+		try:
+			consump_response = requests.post(han_host + "/get_meter_consumption", json={"meter_type": "elec"})
+			if consump_response.ok:
+				elec_meter_consumption = consump_response.json()["meter_consump"]
+				logger.info("Electricity Consumption returned")
+				#print("Meter consumption for {} meter: {}".format("elec", elec_meter_consumption))
+			else:
+				logger.error("Error calling elec get_meter_consumption API: {}".format(consump_response.json()["Status"]))
+		except:
+			logger.error("Error in elec  get_meter_consumption API try block")
+			# Get elec meter status
+		try:
+			status_response = requests.post(han_host + "/get_meter_status", json={"meter_type": "elec"})
+			if status_response.ok:
+				elec_meter_status = status_response.json()["meter_status"]
+				logger.info("Electricity Meter Status returned")
+				#print("Meter status for {} meter: {}".format("elec", elec_meter_status))
+			else:
+				logger.error("Error calling get_meter_status API: {}".format(elec_meter_status_response.json()["Status"]))
+		except:
 			logger.error("Error in elec  get_meter_consumption API try block")
 	# Get gas  meter consumption
 	if gas_meter:
-	    try:
-		gas_consump_response = requests.post(han_host + "/get_meter_consumption", json={"meter_type": "gas"})
-		if gas_consump_response.ok:
-			gas_meter_consumption = gas_consump_response.json()["meter_consump"]
-			logger.info("Gas Consumption returned")
-			#print("Meter consumption for {} meter: {}".format("gas", gas_meter_consumption))
-		else:
-			logger.error("Error calling get_meter_consumption API: {}".format(gas_consump_response.json()["Status"]))
-	    except:
+		try:
+			gas_consump_response = requests.post(han_host + "/get_meter_consumption", json={"meter_type": "gas"})
+			if gas_consump_response.ok:
+				gas_meter_consumption = gas_consump_response.json()["meter_consump"]
+				logger.info("Gas Consumption returned")
+				#print("Meter consumption for {} meter: {}".format("gas", gas_meter_consumption))
+			else:
+				logger.error("Error calling get_meter_consumption API: {}".format(gas_consump_response.json()["Status"]))
+		except:
 			logger.error("Error in Gas  get_meter_consumption API try block")
 	# Get gas meter status
-	    try:
-		gas_status_response = requests.post(han_host + "/get_meter_status", json={"meter_type": "gas"})
-		if gas_status_response.ok:
-			gas_meter_status = gas_status_response.json()["meter_status"]
-			logger.info("Gas Meter Status returned")
-			#print("Meter status for {} meter: {}".format("gas", gas_meter_status))
-		else:
-			logger.error("Error calling get_meter_status API: {}".format(gas_meter_status_response.json()["Status"]))
-	    except:
+		try:
+			gas_status_response = requests.post(han_host + "/get_meter_status", json={"meter_type": "gas"})
+			if gas_status_response.ok:
+				gas_meter_status = gas_status_response.json()["meter_status"]
+				logger.info("Gas Meter Status returned")
+				#print("Meter status for {} meter: {}".format("gas", gas_meter_status))
+			else:
+				logger.error("Error calling get_meter_status API: {}".format(gas_meter_status_response.json()["Status"]))
+		except:
 			logger.error("Error in gas  get_meter_status API try block")
 	#Publish to  MQTT Broker
 	try:
 		if electricity_meter:
-		    ret= client.publish("homepro/elec_meter",elec_meter_consumption)
-		    ret2 = client.publish("homepro/elect_meter_status", elec_meter_status)
+			ret= client.publish("homepro/elec_meter",elec_meter_consumption)
+			ret2 = client.publish("homepro/elect_meter_status", elec_meter_status)
 		if gas_meter:
-		    ret3 = client.publish("homepro/gas_meter", gas_meter_consumption)
-		    ret4 = client.publish("homepro/gas_meter_status", gas_meter_status)
+			ret3 = client.publish("homepro/gas_meter", gas_meter_consumption)
+			ret4 = client.publish("homepro/gas_meter_status", gas_meter_status)
 	except:
 		logger.error("Error in publishing MQTT data")
 	time.sleep(5)
