@@ -35,36 +35,56 @@ if config.read("/root/mqtt/mqtt.cfg"):
 		logger.info("Using meters as defined in mqtt.cfg")
 		electricity_meter=config.get("meters","electricity")=="True"
 		gas_meter=config.get("meters","gas")=="True"
+	#catches issue if someone has not added a meter section to  meter.cfg
+	else:
+		logger.info("No meter section in mqtt.cfg, using default electricity")
+		electricity_meter=True
+		gas_meter=False
+	logging=config.has_section("logging")
+	if logging:
+		log_level=config.get("logging","level")
+		try:
+			logger.setLevel(log_level)
+			logger.info("Setting Log Level to "+log_level)
+		except:
+			logger.info("Default  to error level logging")
 else:
-	logger.error("Config file mqtt.cfg not found, using defaults")
-	print("deffo")	
+	logger.error("Config file mqtt.cfg not found, using defaults")	
 	broker="192.168.1.41"
 	port=1883
 	authentication=False
 	electricity_meter=True
-	gas_meter=True
+	gas_meter=False
 # Create a flag in class to track MQTT broker connection success
 mqtt.Client.connected_flag=False
 
-def on_publish(client , userdata, mid):             #create function for callback
+def on_publish(client, userdata, mid, reason_codes, properties):             #create function for callback
 	logger.info("MQTT topic published")
 	pass
-def on_connect(client, userdata, flags, rc):
-	if rc==0:
-		logger.info("Connected to MQTT Broker  Returned code="+str(rc))
+
+def on_connect(client, userdata, flags, reason_code, properties):
+	#if flags.session_present:
+        	# ...
+	if reason_code == 0:
+		# successful connection
+		logger.info("Connected to MQTT Broker  Returned code="+str(reason_code))
 		client.connected_flag = True
-	else:
-		logger.error("Bad connection to MQTT BrokerReturned code="+str(rc))
-def on_disconnect(client, userdata, rc):
-	logger.info("Disconnected from MQTT broker  "+str(rc))
-	client.connected_flag = False
+
+	if reason_code > 0:
+        # error processing
+		logger.error("Bad connection to MQTT BrokerReturned code="+str(reason_code))
+
+def on_disconnect(client, userdata, flags, reason_code, properties):
+	logger.info("Disconnected from MQTT broker  "+str(reason_code))
+	client.connected_flag = False	
 
 #   start the client and define callbacks
-client=mqtt.Client()
+client=mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 client.on_connect = on_connect
 client.on_disconnect = on_disconnect
 client.on_publish = on_publish
 if authentication:
+
 	client.username_pw_set(username, password)
 	# For testing the password will be writtent to mqtt.log, comment out the line below to stop this
 	logger.info("Using username: "+username+" and password of "+password+" with authentication")
@@ -125,7 +145,7 @@ while True:
 			else:
 				logger.error("Error calling get_meter_consumption API: {}".format(gas_consump_response.json()["Status"]))
 		except:
-			logger.error("Error in Gas  get_meter_consumption API try block")
+				logger.error("Error in Gas  get_meter_consumption API try block")
 	# Get gas meter status
 		try:
 			gas_status_response = requests.post(han_host + "/get_meter_status", json={"meter_type": "gas"})
@@ -136,7 +156,7 @@ while True:
 			else:
 				logger.error("Error calling get_meter_status API: {}".format(gas_meter_status_response.json()["Status"]))
 		except:
-			logger.error("Error in gas  get_meter_status API try block")
+				logger.error("Error in gas  get_meter_status API try block")
 	#Publish to  MQTT Broker
 	try:
 		if electricity_meter:
