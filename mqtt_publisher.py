@@ -182,7 +182,7 @@ while True:
             client.publish("homepro/elec_meter", elec_meter_consumption)
             client.publish("homepro/elect_meter_status", elec_meter_status)
 
-            client.publish("homepro/elec_meter/reading", elec_meter_consumption)
+            client.publish("homepro/elec_meter/consumption", elec_meter_consumption)
             client.publish("homepro/elec_meter/status", elec_meter_status)
             client.publish("homepro/elec_meter/info", elec_meter_info)
         except:
@@ -199,7 +199,7 @@ while True:
             client.publish("homepro/gas_meter", gas_meter_consumption)
             client.publish("homepro/gas_meter_status", elec_meter_status)
 
-            client.publish("homepro/gas_meter/reading", gas_meter_consumption)
+            client.publish("homepro/gas_meter/consumption", gas_meter_consumption)
             client.publish("homepro/gas_meter/status", gas_meter_status)
             client.publish("homepro/gas_meter/info", get_meter_info("gas"))
         except:
